@@ -15,17 +15,21 @@ def analyze_text(text):
     }
 
 def main():
-    parser = argparse.ArgumentParser(description='Text Analyzer Pro')
-    parser.add_argument('input', nargs='?', help='Text to analyze')
-    parser.add_argument('-f', '--file', help='Read from file')
-    parser.add_argument('--json', action='store_true')
-    args = parser.parse_args()
-    if args.file:
-        with open(args.file, 'r') as f:
-            text = f.read()
-    else:
-        text = args.input or ''
-    result = analyze_text(text)
-    print(json.dumps(result, indent=2) if args.json else f"Words: {result['word_count']}, Unique: {result['unique_words']}")
+    try:
+        parser = argparse.ArgumentParser(description='Text Analyzer Pro')
+        parser.add_argument('input', nargs='?', help='Text to analyze')
+        parser.add_argument('-f', '--file', help='Read from file')
+        parser.add_argument('--json', action='store_true')
+        args = parser.parse_args()
+        if args.file:
+            with open(args.file, 'r') as f:
+                text = f.read()
+        else:
+            text = args.input or ''
+        result = analyze_text(text)
+        print(json.dumps(result, indent=2) if args.json else f"Words: {result['word_count']}, Unique: {result['unique_words']}")
+    except Exception as e:
+        print(f"Error: {e}")
+        sys.exit(1)
 if __name__ == '__main__':
     main()
